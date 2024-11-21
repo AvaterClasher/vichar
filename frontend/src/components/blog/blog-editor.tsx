@@ -98,7 +98,7 @@ export default function BlogEditor() {
 					<Input
 						placeholder="Link of the banner image"
 						value={banner}
-						onChange={(e) => setTitle(e.target.value)}
+						onChange={(e) => setBanner(e.target.value)}
 						className="text-sm"
 					/>
 				</div>
@@ -107,7 +107,7 @@ export default function BlogEditor() {
 					<Input
 						placeholder="Description"
 						value={description}
-						onChange={(e) => setTitle(e.target.value)}
+						onChange={(e) => setDescription(e.target.value)}
 						className="text-sm"
 					/>
 				</div>
