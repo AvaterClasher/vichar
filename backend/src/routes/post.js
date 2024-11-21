@@ -1,3 +1,5 @@
+/** @format */
+
 const express = require("express");
 const { Post, User } = require("../models");
 const { verifyToken } = require("../middleware/verify");
@@ -65,6 +67,28 @@ router.get("/tag/:tag", async (req, res) => {
 	} catch (err) {
 		res.status(500).json({
 			message: "Error fetching posts by tag",
+			error: err.message,
+		});
+	}
+});
+
+// Get a post by ID
+router.put("/:postId", async (req, res) => {
+	const { postId } = req.params;
+
+	try {
+		const post = await Post.findOne({
+			where: { id: postId },
+		});
+
+		if (!post) {
+			return res.status(404).json({ message: "Post not found" });
+		}
+
+		res.status(200).json(post);
+	} catch (err) {
+		res.status(500).json({
+			message: "Error updating post",
 			error: err.message,
 		});
 	}
