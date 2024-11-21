@@ -13,9 +13,7 @@ import { Button } from "../ui/button";
 import api from "@/utils/api";
 
 const fetchPosts = async () => {
-	const { data } = await api.get(
-		"/posts"
-	);
+	const { data } = await api.get("/posts");
 	return data;
 };
 
@@ -80,7 +78,10 @@ export default function BlogPosts() {
 									</span>
 									<Separator orientation="vertical" />
 									<span className="text-gray-400 text-sm">
-										3 min read
+										{Math.ceil(
+											post.content.split(" ").length / 200
+										)}{" "}
+										min read
 									</span>
 								</div>
 							</div>
