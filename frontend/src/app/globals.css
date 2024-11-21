@@ -12,6 +12,11 @@ body {
   }
 }
 
+::selection {
+  background-color: #474747;
+  color: rgb(255, 255, 255);
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
