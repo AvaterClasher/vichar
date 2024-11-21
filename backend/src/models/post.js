@@ -14,6 +14,14 @@ const Post = sequelize.define("Post", {
 		type: DataTypes.STRING,
 		allowNull: false,
 	},
+	description: {
+		type: DataTypes.TEXT,
+		allowNull: false,
+	},
+	bannerImageLink: {
+		type: DataTypes.STRING,
+		allowNull: true,
+	},
 	content: {
 		type: DataTypes.TEXT,
 		allowNull: false,

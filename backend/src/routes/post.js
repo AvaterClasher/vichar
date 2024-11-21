@@ -6,13 +6,15 @@ const router = express.Router();
 
 // Create a new post
 router.post("/", verifyToken, async (req, res) => {
-	const { title, content, tag } = req.body;
+	const { title, content, tag, bannerImageLink, description } = req.body;
 
 	try {
 		const newPost = await Post.create({
 			title,
 			content,
 			tag,
+			description,
+			bannerImageLink,
 			authorId: req.userId,
 		});
 		res.status(201).json(newPost);
