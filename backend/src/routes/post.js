@@ -79,12 +79,11 @@ router.get("/:postId", async (req, res) => {
 	try {
 		const post = await Post.findOne({
 			where: { id: postId },
+			include: { model: User, attributes: ["email", "username"]}
 		});
-
 		if (!post) {
 			return res.status(404).json({ message: "Post not found" });
 		}
-
 		res.status(200).json(post);
 	} catch (err) {
 		res.status(500).json({

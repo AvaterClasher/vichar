@@ -49,7 +49,7 @@ const BlogPost: React.FC = () => {
 		<div className="max-w-3xl mx-auto mt-10">
 			<h1 className="text-3xl font-bold mb-4">{title}</h1>
 			<div className="flex justify-between text-sm text-gray-500">
-				<span>By {User.username}</span>
+				<span>By {User}</span>
 				<span>{new Date(createdAt).toLocaleDateString()}</span>
 			</div>
 			<img
