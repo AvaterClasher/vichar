@@ -19,7 +19,7 @@ router.post("/", verifyToken, async (req, res) => {
 			bannerImageLink,
 			authorId: req.userId,
 		});
-		res.status(201).json(newPost);
+		res.json(newPost);
 	} catch (err) {
 		res.status(500).json({
 			message: "Error creating post",
