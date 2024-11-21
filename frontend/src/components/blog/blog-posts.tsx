@@ -1,5 +1,7 @@
-/** @format */
+"use client";
 
+import { useQuery } from "react-query";
+import axios from "axios";
 import { formatDistance } from "date-fns";
 import Link from "next/link";
 import { Badge } from "../ui/badge";
@@ -7,68 +9,75 @@ import { Hash } from "lucide-react";
 import { Separator } from "../ui/separator";
 import crypto from "crypto";
 
-// Demo data for rendering blog posts
-const posts = [
-	{
-		id: 1,
-		title: "Vichar",
-        userEmail: "avater.clasher@gmail.com",
-		excerpt:
-			"विचार · noun\n\nविचार is a modern blogging platform designed to empower your voice and connect your ideas with the world. Share personal stories, professional insights, or creative musings in a seamless and engaging space.",
-		author: {
-			name: "Avater",
-			avatar: "",
-		},
-		date: "2024-11-21",
-		readTime: "3 min read",
-		tags: ["vichar", "helo", "world"],
-	},
-];
+const fetchPosts = async () => {
+	const { data } = await axios.get("collective-violante-avater-dffc8fee.koyeb.app/api/posts");
+	return data;
+};
 
-export function BlogPosts() {
-    const trimmedEmail = posts[0].userEmail.trim().toLowerCase();
-    const hash = crypto.createHash('sha256').update(trimmedEmail).digest('hex');
-    const getAvater = (hash:string, size: number) => {
-        return `https://www.gravatar.com/avatar/${hash}?s=${size}&d=identicon`
-    }
+export default function BlogPosts() {
+	const { data: posts, isLoading, error } = useQuery(["posts"], fetchPosts);
+
+	const getAvatar = (email: string, size: number) => {
+		const trimmedEmail = email.trim().toLowerCase();
+		const hash = crypto
+			.createHash("md5")
+			.update(trimmedEmail)
+			.digest("hex");
+		return `https://www.gravatar.com/avatar/${hash}?s=${size}&d=identicon`;
+	};
+
+	if (isLoading) {
+		return <p>Loading...</p>;
+	}
+
+	if (error) {
+		return <p>Error loading posts.</p>;
+	}
+
 	return (
 		<div>
 			<h2 className="text-2xl font-bold mb-6">Latest posts</h2>
 			<div className="space-y-4">
-				{posts.map((post) => (
+				{posts.map((post: any) => (
 					<Link
 						key={post.id}
 						href={`/blog/${post.id}`}
-						className="block p-5 rounded-lg border transition-colors ">
+						className="block p-5 rounded-lg border transition-colors">
 						<div className="flex items-start justify-between mb-3">
 							<h3 className="text-lg font-semibold">
 								{post.title}
 							</h3>
 							<div className="flex items-center space-x-2 h-5">
-								<img src={getAvater(hash, 20)} />
-                                <Separator orientation="vertical"/>
+								<img
+									src={getAvatar(post.User.email, 20)}
+									alt={post.User.username}
+									className="rounded-full"
+								/>
+								<Separator orientation="vertical" />
 								<span className="text-gray-400 text-sm">
 									{formatDistance(
-										new Date(post.date),
+										new Date(post.createdAt),
 										new Date(),
 										{ addSuffix: true }
 									)}
 								</span>
-								<Separator orientation="vertical"/>
+								<Separator orientation="vertical" />
 								<span className="text-gray-400 text-sm">
-									{post.readTime}
+									3 min read
 								</span>
 							</div>
 						</div>
 						<p className="text-muted-foreground mb-3 text-sm">
-							{post.excerpt}
+							{post.content.slice(0, 100)}...
 						</p>
 						<div className="flex space-x-2">
-							{post.tags.map((tag) => (
-                                <Badge key={tag} variant="secondary">
-                                    <Hash className="h-3 w-3"/> {tag}
-                                </Badge>
-							))}
+							{post.tag
+								? post.tag.split(",").map((tag: string) => (
+										<Badge key={tag} variant="secondary">
+											<Hash className="h-3 w-3" /> {tag}
+										</Badge>
+								  ))
+								: null}
 						</div>
 					</Link>
 				))}

@@ -5,6 +5,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/navbar";
+import ReactQueryProvider from "@/utils/react-query-provider";
 
 const geistSans = localFont({
 	src: "./fonts/GeistVF.woff",
@@ -37,7 +38,9 @@ export default function RootLayout({
 					enableSystem
 					disableTransitionOnChange>
 					<Navbar />
-					<main className="mt-20">{children}</main>
+					<ReactQueryProvider>
+						<main className="mt-20">{children}</main>
+					</ReactQueryProvider>
 				</ThemeProvider>
 			</body>
 		</html>
