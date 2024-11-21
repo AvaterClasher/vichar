@@ -73,7 +73,7 @@ router.get("/tag/:tag", async (req, res) => {
 });
 
 // Get a post by ID
-router.put("/:postId", async (req, res) => {
+router.get("/:postId", async (req, res) => {
 	const { postId } = req.params;
 
 	try {
