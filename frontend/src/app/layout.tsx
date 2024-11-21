@@ -4,8 +4,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Navbar } from "@/components/navbar";
 import ReactQueryProvider from "@/utils/react-query-provider";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = localFont({
 	src: "./fonts/GeistVF.woff",
@@ -37,9 +37,9 @@ export default function RootLayout({
 					defaultTheme="system"
 					enableSystem
 					disableTransitionOnChange>
-					<Navbar />
 					<ReactQueryProvider>
-						<main className="mt-20">{children}</main>
+						<main>{children}</main>
+						<Toaster />
 					</ReactQueryProvider>
 				</ThemeProvider>
 			</body>
