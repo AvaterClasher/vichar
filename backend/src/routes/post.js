@@ -31,7 +31,7 @@ router.get("/", async (req, res) => {
 		const authorFilter = author ? { authorId: author } : {};
 		const posts = await Post.findAll({
 			where: authorFilter,
-			include: { model: User, attributes: ["email"] },
+			include: { model: User, attributes: ["email", "username"] },
 		});
 		res.json(posts);
 	} catch (err) {
