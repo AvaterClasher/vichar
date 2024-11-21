@@ -19,8 +19,9 @@ router.post('/signup', async (req, res) => {
 
     const passwordHash = await bcrypt.hash(password, 10);
     const newUser = await User.create({ email, passwordHash, username });
+    const token = jwt.sign({ id: newUser.id }, process.env.JWT_SECRET, { expiresIn: '1d' });
 
-    res.status(201).json({ id: newUser.id, email: newUser.email, username: newUser.username });
+    res.json({ id: newUser.id, email: newUser.email, username: newUser.username, token: token });
   } catch (err) {
     res.status(500).json({ message: 'Error signing up', error: err.message });
   }
@@ -39,6 +40,7 @@ router.post('/login', async (req, res) => {
 
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1d' });
     res.json({ token });
+    res.json({ id: user.id, email: user.email, username: user.username, token: token });
   } catch (err) {
     res.status(500).json({ message: 'Error logging in', error: err.message });
   }
