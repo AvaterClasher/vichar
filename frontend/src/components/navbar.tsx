@@ -5,8 +5,23 @@
 import Link from "next/link";
 import { ModeToggle } from "./dark-mode-toggle";
 import { MobileNav } from "./mobile-nav";
+import { useEffect, useState } from "react";
+import { deleteCookie, getCookie } from "cookies-next";
 
 export function Navbar() {
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+	useEffect(() => {
+		setIsLoggedIn(!!getCookie("__vichar_token"));
+	}, []);
+
+	const handleLogout = () => {
+		deleteCookie("__vichar_token");
+		deleteCookie("__vichar_id");
+		setIsLoggedIn(false);
+		window.location.href = "/";
+	};
+
 	return (
 		<nav className="backdrop-blur-sm fixed w-full top-0 z-50">
 			<div className="max-w-3xl mx-auto px-4 py-3">
@@ -16,30 +31,50 @@ export function Navbar() {
 					</Link>
 					<div className="hidden text-sm md:flex items-center space-x-6">
 						<Link
-							href="/blog"
-							className="inline-block duration-300 ease-in-out capitalize text-foreground/60 transition-colors hover:text-foreground/80">
-							Blog
-						</Link>
-						<Link
 							href="/authors"
 							className="inline-block duration-300 ease-in-out capitalize text-foreground/60 transition-colors hover:text-foreground/80">
 							Authors
-						</Link>
-						<Link
-							href="/about"
-							className="inline-block duration-300 ease-in-out capitalize text-foreground/60 transition-colors hover:text-foreground/80">
-							About
 						</Link>
 						<Link
 							href="/tags"
 							className="inline-block duration-300 ease-in-out capitalize text-foreground/60 transition-colors hover:text-foreground/80">
 							Tags
 						</Link>
-                        <ModeToggle />
+						{isLoggedIn ? (
+							<>
+								<Link
+									href="/dashboard"
+									className="inline-block duration-300 ease-in-out capitalize text-foreground/60 transition-colors hover:text-foreground/80">
+									Dashboard
+								</Link>
+								<button
+									onClick={handleLogout}
+									className="inline-block duration-300 ease-in-out capitalize text-foreground/60 transition-colors hover:text-foreground/80">
+									Sign Out
+								</button>
+							</>
+						) : (
+							<>
+								<Link
+									href="/login"
+									className="inline-block duration-300 ease-in-out capitalize text-foreground/60 transition-colors hover:text-foreground/80">
+									Login
+								</Link>
+								<Link
+									href="/signup"
+									className="inline-block duration-300 ease-in-out capitalize text-foreground/60 transition-colors hover:text-foreground/80">
+									Sign Up
+								</Link>
+							</>
+						)}
+						<ModeToggle />
 					</div>
 					<div className="flex gap-2 md:hidden">
-						<MobileNav />
-						<ModeToggle/>
+						<MobileNav
+							isLoggedIn={isLoggedIn}
+							onLogout={handleLogout}
+						/>
+						<ModeToggle />
 					</div>
 				</div>
 			</div>
