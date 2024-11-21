@@ -22,5 +22,5 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const PORT = process.env.PORT || 5000;
 initializeDatabase().then(() => {
-  app.listen(PORT, () => log.success(`Server running on http://localhost:${PORT}`));
+  app.listen(PORT, () => log.success(`Server running on ${PORT}`));
 });
