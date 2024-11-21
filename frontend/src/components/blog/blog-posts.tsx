@@ -1,6 +1,6 @@
 "use client";
 
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { formatDistance } from "date-fns";
 import Link from "next/link";
@@ -10,12 +10,18 @@ import { Separator } from "../ui/separator";
 import crypto from "crypto";
 
 const fetchPosts = async () => {
-	const { data } = await axios.get("collective-violante-avater-dffc8fee.koyeb.app/api/posts");
+	const { data } = await axios.get(
+		"https://collective-violante-avater-dffc8fee.koyeb.app/api/posts"
+	);
 	return data;
 };
 
 export default function BlogPosts() {
-	const { data: posts, isLoading, error } = useQuery(["posts"], fetchPosts);
+	const {
+		data: posts,
+		isLoading,
+		error,
+	} = useQuery({ queryKey: ["posts"], queryFn: fetchPosts });
 
 	const getAvatar = (email: string, size: number) => {
 		const trimmedEmail = email.trim().toLowerCase();

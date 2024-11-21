@@ -2,32 +2,39 @@
 
 "use client";
 
-import { QueryClientProvider, QueryClient, Hydrate } from "react-query";
-import { useState } from "react";
+import {
+	QueryClientProvider,
+	QueryClient,
+	isServer,
+} from "@tanstack/react-query";
 
-const ReactQueryProvider = ({
-	children,
-	dehydratedState,
-}: {
-	children: React.ReactNode;
-	dehydratedState?: any;
-}) => {
-	const [queryClient] = useState(
-		() =>
-			new QueryClient({
-				defaultOptions: {
-					queries: {
-						refetchOnWindowFocus: false,
-						refetchOnReconnect: false,
-						staleTime: 1000 * 60,
-					},
-				},
-			})
-	);
+function makeQueryClient() {
+	return new QueryClient({
+		defaultOptions: {
+			queries: {
+				staleTime: 60 * 1000,
+			},
+		},
+	});
+}
+
+let browserQueryClient: QueryClient | undefined = undefined;
+
+function getQueryClient() {
+	if (isServer) {
+		return makeQueryClient();
+	} else {
+		if (!browserQueryClient) browserQueryClient = makeQueryClient();
+		return browserQueryClient;
+	}
+}
+
+const ReactQueryProvider = ({ children }: { children: React.ReactNode }) => {
+	const queryClient = getQueryClient();
 
 	return (
 		<QueryClientProvider client={queryClient}>
-			<Hydrate state={dehydratedState}>{children}</Hydrate>
+			{children}
 		</QueryClientProvider>
 	);
 };

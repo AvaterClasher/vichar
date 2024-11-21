@@ -1,28 +1,29 @@
-"use client"
-
 import { BlogHeader } from "@/components/blog/blog-header";
 import BlogPosts from "@/components/blog/blog-posts";
-import { dehydrate } from "react-query";
-import { Hydrate } from "react-query";
-import getQueryClient from "@/utils/get-query-client";
+import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
+const fetchPosts = async () => {
+	const { data } = await axios.get(
+		"https://collective-violante-avater-dffc8fee.koyeb.app/api/posts"
+	);
+	return data;
+};
+
 export default async function Home() {
-  const queryClient = getQueryClient();
+	const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery("posts", async () => {
-    const { data } = await axios.get("https://collective-violante-avater-dffc8fee.koyeb.app/api/posts");
-    return data;
-  });
+	await queryClient.prefetchQuery({
+		queryKey: ["posts"],
+		queryFn: fetchPosts,
+	});
 
-  const dehydratedState = dehydrate(queryClient);
-
-  return (
-    <Hydrate state={dehydratedState}>
-      <div className="max-w-3xl mx-auto px-4">
-        <BlogHeader />
-        <BlogPosts />
-      </div>
-    </Hydrate>
-  );
+	return (
+		<div className="max-w-3xl mx-auto px-4">
+			<HydrationBoundary state={dehydrate(queryClient)}>
+				<BlogHeader />
+				<BlogPosts />
+			</HydrationBoundary>
+		</div>
+	);
 }
