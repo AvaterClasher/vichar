@@ -40,7 +40,7 @@ function Dashboard() {
 				<h1 className="text-3xl font-bold mb-4">Your Posts</h1>
 				<Button className="m-0 px-2 rounded-lg">
 					<Link
-						href="/write"
+						href="/dashboard/write"
 						className="flex text-sm gap-2 items-center justify-center">
 						<PlusIcon />
 						Write a Post
@@ -55,7 +55,7 @@ function Dashboard() {
 						<div className="flex flex-col items-center justify-center rounded-2xl text-xl gap-5 border h-60 w-full">
 							No posts available.
 							<Button className="text-base">
-								<Link href="/write">Write one yourself ?</Link>
+								<Link href="/dashboard/write">Write one yourself ?</Link>
 							</Button>
 						</div>
 					</div>
