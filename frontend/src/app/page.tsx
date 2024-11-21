@@ -1,6 +1,11 @@
 import { BlogHeader } from "@/components/blog/blog-header";
 import BlogPosts from "@/components/blog/blog-posts";
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import { Navbar } from "@/components/navbar";
+import {
+	dehydrate,
+	HydrationBoundary,
+	QueryClient,
+} from "@tanstack/react-query";
 import axios from "axios";
 
 const fetchPosts = async () => {
@@ -19,11 +24,14 @@ export default async function Home() {
 	});
 
 	return (
-		<div className="max-w-3xl mx-auto px-4">
-			<HydrationBoundary state={dehydrate(queryClient)}>
+		<div className="mt-20">
+			<Navbar />
+			<div className="max-w-3xl mx-auto px-4">
 				<BlogHeader />
-				<BlogPosts />
-			</HydrationBoundary>
+				<HydrationBoundary state={dehydrate(queryClient)}>
+					<BlogPosts />
+				</HydrationBoundary>
+			</div>
 		</div>
 	);
 }
