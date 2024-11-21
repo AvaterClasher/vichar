@@ -73,7 +73,9 @@ export const BlogPost: React.FC = () => {
 				</div>
 			</div>
 			<div className="mt-8 mb-20 prose prose-neutral dark:prose-invert max-w-none">
-				<ReactMarkdown children={content} rehypePlugins={[rehypeRaw]} />
+				<ReactMarkdown rehypePlugins={[rehypeRaw]} >
+					{content}
+				</ReactMarkdown>
 			</div>
 		</div>
 	);
