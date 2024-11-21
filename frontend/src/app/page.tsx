@@ -1,16 +1,16 @@
 import { BlogHeader } from "@/components/blog/blog-header";
 import BlogPosts from "@/components/blog/blog-posts";
 import { Navbar } from "@/components/navbar";
+import api from "@/utils/api";
 import {
 	dehydrate,
 	HydrationBoundary,
 	QueryClient,
 } from "@tanstack/react-query";
-import axios from "axios";
 
 const fetchPosts = async () => {
-	const { data } = await axios.get(
-		"https://collective-violante-avater-dffc8fee.koyeb.app/api/posts"
+	const { data } = await api.get(
+		"/posts"
 	);
 	return data;
 };
