@@ -8,16 +8,19 @@ const router = express.Router();
 
 // Sign up a new user
 router.post('/signup', async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, username } = req.body;
 
   try {
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) return res.status(400).json({ message: 'Email already in use' });
 
-    const passwordHash = await bcrypt.hash(password, 10);
-    const newUser = await User.create({ email, passwordHash });
+    const existingUsername = await User.findOne({ where: { username } });
+    if (existingUsername) return res.status(400).json({ message: 'Username already in use' });
 
-    res.status(201).json({ id: newUser.id, email: newUser.email });
+    const passwordHash = await bcrypt.hash(password, 10);
+    const newUser = await User.create({ email, passwordHash, username });
+
+    res.status(201).json({ id: newUser.id, email: newUser.email, username: newUser.username });
   } catch (err) {
     res.status(500).json({ message: 'Error signing up', error: err.message });
   }
