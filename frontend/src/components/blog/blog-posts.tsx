@@ -86,7 +86,7 @@ export default function BlogPosts() {
 								</div>
 							</div>
 							<p className="text-muted-foreground mb-3 text-sm">
-								{post.content.slice(0, 100)}...
+								{post.description.slice(0, 100)}...
 							</p>
 							<div className="flex space-x-2">
 								{post.tag
