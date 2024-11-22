@@ -186,7 +186,6 @@ export default function BlogEditor() {
 					</Button>
 					<Button
 						type="submit"
-						disabled={mutation.isPending}
 						className="min-w-[100px]">
 						Publish
 					</Button>
