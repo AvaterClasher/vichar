@@ -19,7 +19,6 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 const fetchPosts = async (userId: any) => {
-	// userId = "867c5aff-8adb-4fad-87fa-596d9aabcedb";
 	const response = await api.get(`/posts?author=${userId}`);
 	return response.data;
 };
