@@ -31,11 +31,6 @@ export function Navbar() {
 					</Link>
 					<div className="hidden text-sm md:flex items-center space-x-6">
 						<Link
-							href="/authors"
-							className="inline-block duration-300 ease-in-out capitalize text-foreground/60 transition-colors hover:text-foreground/80">
-							Authors
-						</Link>
-						<Link
 							href="/tags"
 							className="inline-block duration-300 ease-in-out capitalize text-foreground/60 transition-colors hover:text-foreground/80">
 							Tags
