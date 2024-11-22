@@ -32,8 +32,8 @@ export const BlogPost: React.FC = () => {
 	});
 	console.log(blogData);
 
-	if (isLoading) return <p><Loading/></p>;
-	if (isError) return <p><Error message={error.message}/></p>;
+	if (isLoading) return <Loading/>;
+	if (isError) return <Error message={error.message}/>;
 
 	const {
 		title,
