@@ -30,7 +30,6 @@ export const BlogPost: React.FC = () => {
 		queryKey: ["blogPost", id],
 		queryFn: () => fetchBlogPost(id as string),
 	});
-	console.log(blogData);
 
 	if (isLoading) return <Loading/>;
 	if (isError) return <Error message={error.message}/>;
