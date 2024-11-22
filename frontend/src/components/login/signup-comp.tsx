@@ -51,6 +51,7 @@ export function SignUpForm() {
 			try {
 				try {
 					const response = await api.post("/auth/signup", data);
+					console.log("Sign-Up Request Data:", response.data);
 					return response.data;
 				} catch (error: any) {
 					if (error.response && error.response.data) {
@@ -69,14 +70,15 @@ export function SignUpForm() {
 			setCookie("__vichar_id", data.id, { maxAge: oneDay });
 			setCookie("__vichar_token", data.token, { maxAge: oneDay });
 			toast.success("Sign-Up successful");
-			router.push("/");
+			router.prefetch("/dashboard");
+			router.push("/dashboard");
 		},
 		onError: (err: Error) => {
 			setError(err.message);
 		},
 	});
 
-	const onSubmit = async (data: SignUpFormData) => {
+	const onSubmit = (data: SignUpFormData) => {
 		setError("");
 		mutation.mutate(data);
 	};
