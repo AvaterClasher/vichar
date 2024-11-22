@@ -1,3 +1,5 @@
+"use client"
+
 import { useQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
 import api from "@/utils/api";
@@ -6,7 +8,8 @@ import { Badge } from "../ui/badge";
 import { Hash } from "lucide-react";
 import { Loading } from "../loading";
 import { Error } from "../error";
-import { MarkdownRenderer } from "../codeBlock";
+import remarkGfm from "remark-gfm";
+import Markdown from "react-markdown";
 
 const fetchBlogPost = async (id: string) => {
 	const { data } = await api.get(`/posts/${id}`);
@@ -87,7 +90,7 @@ export const BlogPost: React.FC = () => {
 			</div>
 
 			<div className="mt-8 mb-20 prose prose-neutral dark:prose-invert max-w-none text-sm sm:text-base">
-				<MarkdownRenderer>{content}</MarkdownRenderer>
+				<Markdown remarkPlugins={[remarkGfm]}>{content}</Markdown>;
 			</div>
 		</div>
 	);
