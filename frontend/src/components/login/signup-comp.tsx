@@ -49,18 +49,23 @@ export function SignUpForm() {
 	const mutation = useMutation({
 		mutationFn: async (data: SignUpFormData) => {
 			try {
-				const response = await api.post("/auth/signup", data, {
-					headers: { "Content-Type": "application/json" },
+				const response = await fetch("https://collective-violante-avater-dffc8fee.koyeb.app/api/auth/signup", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(data),
 				});
-				return response.data;
-			} catch (error: any) {
-				if (error.response && error.response.data) {
-					throw new Error(
-						error.response.data.message || "Signup failed"
-					);
-				} else {
-					throw new Error("Signup failed");
+
+				if (!response.ok) {
+					const errorData = await response.json();
+					throw new Error(errorData.message || "Signup failed");
 				}
+
+				const responseData = await response.json();
+				return responseData;
+			} catch (error: any) {
+				throw new Error(error.message || "Signup failed");
 			}
 		},
 		onSuccess: (data) => {
