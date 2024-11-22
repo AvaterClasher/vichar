@@ -163,7 +163,9 @@ function Dashboard() {
 							<Button
 								variant="destructive"
 								className="text-sm mt-4"
-								onClick={() => {
+								onClick={(e) => {
+									e.preventDefault();
+									e.stopPropagation();
 									deletePost.mutate(post.id);
 								}}>
 								<Trash2 className="h-4 w-4" />
