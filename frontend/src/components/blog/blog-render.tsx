@@ -65,11 +65,11 @@ export const BlogPost: React.FC = () => {
 						orientation="vertical"
 						className="hidden sm:block"
 					/>
-					{/* <span></span>
+					<span>{new Date(createdAt).toLocaleDateString()}</span>
 					<Separator
 						orientation="vertical"
 						className="hidden sm:block"
-					/> */}
+					/>
 					<span>
 						{Math.ceil(content.split(" ").length / 200)} min read
 					</span>
