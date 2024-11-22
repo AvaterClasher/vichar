@@ -136,7 +136,7 @@ export function SignUpForm() {
 						</p>
 					)}
 					<Button type="submit" className="w-full">
-						"Sign Up"
+						Sign Up
 					</Button>
 				</form>
 				<div className="mt-4 text-center text-sm">
