@@ -54,6 +54,7 @@ export function SignUpForm() {
 					headers: {
 						"Content-Type": "application/json",
 					},
+					cache: "no-cache",
 					body: JSON.stringify(data),
 				});
 
