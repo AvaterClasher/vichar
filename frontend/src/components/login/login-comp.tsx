@@ -50,10 +50,14 @@ export function LoginForm() {
 				const response = await api.post("/auth/login", data);
 				return response.data;
 			} catch (error: any) {
-				if (error.response && error.response.data) {
-					throw new Error(
-						error.response.data.message || "Login failed"
-					);
+				if (error.response) {
+					if (error.response.status === 401) {
+						throw new Error("Unauthorized access. Please check your credentials.");
+					} else if (error.response.data && error.response.data.message) {
+						throw new Error(error.response.data.message);
+					} else {
+						throw new Error("Login failed");
+					}
 				} else {
 					throw new Error(error.message || "Login failed");
 				}
