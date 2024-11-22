@@ -28,12 +28,6 @@ export function MobileNav({
 				</DropdownMenuTrigger>
 				<DropdownMenuContent align="end">
 					<div>
-						<DropdownMenuItem asChild>
-							<a href="/authors">Authors</a>
-						</DropdownMenuItem>
-						<DropdownMenuItem asChild>
-							<a href="/tags">Tags</a>
-						</DropdownMenuItem>
 						{isLoggedIn ? (
 							<>
 								<DropdownMenuItem asChild>
