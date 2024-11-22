@@ -49,22 +49,18 @@ export function SignUpForm() {
 	const mutation = useMutation({
 		mutationFn: async (data: SignUpFormData) => {
 			try {
-				const response = await fetch("https://collective-violante-avater-dffc8fee.koyeb.app/api/auth/signup", {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					cache: "no-cache",
-					body: JSON.stringify(data),
-				});
-
-				if (!response.ok) {
-					const errorData = await response.json();
-					throw new Error(errorData.message || "Signup failed");
+				try {
+					const response = await api.post("/auth/signup", data);
+					return response.data;
+				} catch (error: any) {
+					if (error.response && error.response.data) {
+						throw new Error(
+							error.response.data.message || "Login failed"
+						);
+					} else {
+						throw new Error(error.message || "Login failed");
+					}
 				}
-
-				const responseData = await response.json();
-				return responseData;
 			} catch (error: any) {
 				throw new Error(error.message || "Signup failed");
 			}
@@ -73,7 +69,7 @@ export function SignUpForm() {
 			setCookie("__vichar_id", data.id, { maxAge: oneDay });
 			setCookie("__vichar_token", data.token, { maxAge: oneDay });
 			toast.success("Sign-Up successful");
-			router.push("/dashboard");
+			router.push("/");
 		},
 		onError: (err: Error) => {
 			setError(err.message);
