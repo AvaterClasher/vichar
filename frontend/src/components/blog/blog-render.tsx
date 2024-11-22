@@ -1,8 +1,6 @@
 /** @format */
 
 import { useQuery } from "@tanstack/react-query";
-import ReactMarkdown from "react-markdown";
-import rehypeRaw from "rehype-raw";
 import { usePathname } from "next/navigation";
 import api from "@/utils/api";
 import { Separator } from "@/components/ui/separator";
@@ -10,6 +8,7 @@ import { Badge } from "../ui/badge";
 import { Hash } from "lucide-react";
 import { Loading } from "../loading";
 import { Error } from "../error";
+import { MarkdownRenderer } from "../codeBlock";
 
 const fetchBlogPost = async (id: string) => {
 	const { data } = await api.get(`/posts/${id}`);
@@ -18,7 +17,6 @@ const fetchBlogPost = async (id: string) => {
 
 export const BlogPost: React.FC = () => {
 	const pathname = usePathname();
-	console.log(pathname);
 	const id = pathname.split("/")[2];
 
 	const {
@@ -31,8 +29,8 @@ export const BlogPost: React.FC = () => {
 		queryFn: () => fetchBlogPost(id as string),
 	});
 
-	if (isLoading) return <Loading/>;
-	if (isError) return <Error message={error.message}/>;
+	if (isLoading) return <Loading />;
+	if (isError) return <Error message={error.message} />;
 
 	const {
 		title,
@@ -74,9 +72,7 @@ export const BlogPost: React.FC = () => {
 				</div>
 			</div>
 			<div className="mt-8 mb-20 prose prose-neutral dark:prose-invert max-w-none">
-				<ReactMarkdown rehypePlugins={[rehypeRaw]} >
-					{content}
-				</ReactMarkdown>
+				<MarkdownRenderer>{content}</MarkdownRenderer>
 			</div>
 		</div>
 	);
