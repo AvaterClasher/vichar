@@ -60,8 +60,8 @@ export function SignUpForm() {
 			setCookie("__vichar_id", data.id, { maxAge: oneDay });
 			setCookie("__vichar_token", data.token, { maxAge: oneDay });
 			toast.success("Sign-Up successful");
-			router.prefetch("/dashboard");
-			router.push("/dashboard");
+			router.prefetch("/");
+			router.push("/");
 		},
 		onError: (err: Error) => {
 			setError(err.message);
