@@ -23,6 +23,7 @@ import { toast } from "sonner";
 
 import { setCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
+import api from "@/utils/api";
 
 const loginSchema = z.object({
 	email: z.string().email("Invalid email address"),
@@ -45,22 +46,16 @@ export function LoginForm() {
 
 	const mutation = useMutation({
 		mutationFn: async (data: LoginFormData) => {
-			const res = await fetch(
-				"https://collective-violante-avater-dffc8fee.koyeb.app/api/auth/login",
-				{
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify(data),
+			try {
+				const response = await api.post("/auth/login", data);
+				return response.data;
+			} catch (error: any) {
+				if (error.response && error.response.data) {
+					throw new Error(error.response.data.message || "Login failed");
+				} else {
+					throw new Error(error.message || "Login failed");
 				}
-			);
-
-			if (!res.ok) {
-				const { message } = await res.json();
-				throw new Error(message || "Login failed");
 			}
-			return res.json();
 		},
 		onSuccess: (data) => {
 			setCookie("__vichar_id", data.id, { maxAge: oneDay });

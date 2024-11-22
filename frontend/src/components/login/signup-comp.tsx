@@ -23,6 +23,7 @@ import { toast } from "sonner";
 
 import { setCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
+import api from "@/utils/api";
 
 const SignUpSchema = z.object({
 	username: z.string().min(3, "Username must be at least 3 characters"),
@@ -47,22 +48,16 @@ export function SignUpForm() {
 
 	const mutation = useMutation({
 		mutationFn: async (data: SignUpFormData) => {
-			const res = await fetch(
-				"https://collective-violante-avater-dffc8fee.koyeb.app/api/auth/signup",
-				{
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify(data),
+			try {
+				const response = await api.post("/auth/signup", data);
+				return response.data;
+			} catch (error: any) {
+				if (error.response && error.response.data) {
+					throw new Error(error.response.data.message || "Signup failed");
+				} else {
+					throw new Error("Signup failed");
 				}
-			);
-
-			if (!res.ok) {
-				const { message } = await res.json();
-				throw new Error(message || "Login failed");
 			}
-			return res.json();
 		},
 		onSuccess: (data) => {
 			setCookie("__vichar_id", data.id, { maxAge: oneDay });
