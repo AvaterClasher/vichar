@@ -59,10 +59,10 @@ export default function BlogPosts() {
 							href={`/blog/${post.id}`}
 							className="block p-5 rounded-lg border transition-colors duration-300 ease-in-out hover:bg-secondary/50">
 							<div className="flex items-start justify-between mb-3">
-								<h3 className="text-lg font-semibold">
+								<h3 className="text-base font-semibold">
 									{post.title}
 								</h3>
-								<div className="flex items-center space-x-2 h-5">
+								<div className="mb-2 flex flex-wrap items-center gap-x-2 text-sm text-muted-foreground h-5">
 									<img
 										src={getAvatar(post.User.email, 20)}
 										alt={post.User.username}
@@ -88,7 +88,7 @@ export default function BlogPosts() {
 							<p className="text-muted-foreground mb-3 text-sm">
 								{post.description.slice(0, 100)}...
 							</p>
-							<div className="flex space-x-2">
+							<div className="flex space-x-2 mt-4">
 								{post.tag
 									? post.tag.split(",").map((tag: string) => (
 											<Badge
