@@ -36,17 +36,26 @@ export default function BlogPosts() {
 	};
 
 	if (isLoading) {
-		return <p><Loading/></p>;
+		return (
+				<Loading />
+		);
 	}
 
 	if (error) {
-		return <p><Error message={error.message}/></p>;
+		return (
+				<Error message={error.message} />
+		);
 	}
+
+	const sortedPosts = posts.sort(
+		(a: any, b: any) =>
+			new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+	);
 
 	return (
 		<div>
 			<h2 className="text-2xl font-bold mb-6">Latest posts</h2>
-			{posts.length === 0 ? (
+			{sortedPosts.length === 0 ? (
 				<div className="flex flex-col items-center justify-center rounded-2xl text-xl gap-5 border h-60 w-full">
 					No posts available.
 					<Button className="text-base">
@@ -55,7 +64,7 @@ export default function BlogPosts() {
 				</div>
 			) : (
 				<div className="space-y-4">
-					{posts.map((post: any) => (
+					{sortedPosts.map((post: any) => (
 						<Link
 							key={post.id}
 							href={`/blog/${post.id}`}
