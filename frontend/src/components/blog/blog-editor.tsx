@@ -3,7 +3,7 @@
 "use client";
 
 import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { X, Loader2, Eye, Edit } from "lucide-react";
 import { Input } from "../ui/input";
@@ -17,6 +17,7 @@ import { getCookie } from "cookies-next";
 
 export default function BlogEditor() {
 	const router = useRouter();
+
 	const [title, setTitle] = useState("");
 	const [content, setContent] = useState("");
 	const [currentTag, setCurrentTag] = useState("");
@@ -24,7 +25,10 @@ export default function BlogEditor() {
 	const [banner, setBanner] = useState("");
 	const [tags, setTags] = useState<string[]>([]);
 	const [error, setError] = useState("");
+
 	const token = getCookie("__vichar_token");
+
+	const queryProvider = useQueryClient();
 
 	const createPost = async (postData: {
 		title: string;
@@ -33,17 +37,18 @@ export default function BlogEditor() {
 		bannerImageLink: string;
 		description: string;
 	}) => {
-		const { data } = await api.post("/posts", postData, {
+		await api.post("/posts", postData, {
 			headers: {
 				Authorization: `Bearer ${token}`,
 			},
 		});
-		return data;
 	};
 
 	const mutation = useMutation({
 		mutationFn: createPost,
 		onSuccess: () => {
+			queryProvider.invalidateQueries({ queryKey: ["posts"] });
+			queryProvider.invalidateQueries({ queryKey: ["blog"] });
 			router.push("/dashboard");
 		},
 		onError: (error: any) => {
@@ -183,11 +188,7 @@ export default function BlogEditor() {
 						type="submit"
 						disabled={mutation.isPending}
 						className="min-w-[100px]">
-						{mutation.isPending ? (
-							<Loader2 className="h-4 w-4 animate-spin" />
-						) : (
-							"Publish"
-						)}
+						Publish
 					</Button>
 				</div>
 			</form>
