@@ -64,10 +64,8 @@ export function SignUpForm() {
 			}
 		},
 		onSuccess: (data) => {
-			console.log(data);
 			setCookie("__vichar_id", data.id, { maxAge: oneDay });
 			setCookie("__vichar_token", data.token, { maxAge: oneDay });
-			console.log("hi");
 			toast.success("Sign-Up successful");
 			router.push("/dashboard");
 		},
@@ -76,7 +74,7 @@ export function SignUpForm() {
 		},
 	});
 
-	const onSubmit = (data: SignUpFormData) => {
+	const onSubmit = async (data: SignUpFormData) => {
 		setError("");
 		mutation.mutate(data);
 	};
