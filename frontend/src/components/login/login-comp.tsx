@@ -51,7 +51,9 @@ export function LoginForm() {
 				return response.data;
 			} catch (error: any) {
 				if (error.response && error.response.data) {
-					throw new Error(error.response.data.message || "Login failed");
+					throw new Error(
+						error.response.data.message || "Login failed"
+					);
 				} else {
 					throw new Error(error.message || "Login failed");
 				}
@@ -64,7 +66,7 @@ export function LoginForm() {
 			router.push(`/dashboard`);
 		},
 		onError: (err: Error) => {
-			toast.error(err.message)
+			toast.error(err.message);
 		},
 	});
 
@@ -117,15 +119,8 @@ export function LoginForm() {
 							{error}
 						</p>
 					)}
-					<Button
-						type="submit"
-						className="w-full"
-						// @ts-ignore
-						disabled={mutation.isLoading}>
-						{
-							// @ts-ignore
-							mutation.isLoading ? "Logging in..." : "Login"
-						}
+					<Button type="submit" className="w-full">
+						Login
 					</Button>
 				</form>
 				<div className="mt-4 text-center text-sm">

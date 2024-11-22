@@ -53,7 +53,9 @@ export function SignUpForm() {
 				return response.data;
 			} catch (error: any) {
 				if (error.response && error.response.data) {
-					throw new Error(error.response.data.message || "Signup failed");
+					throw new Error(
+						error.response.data.message || "Signup failed"
+					);
 				} else {
 					throw new Error("Signup failed");
 				}
@@ -133,11 +135,8 @@ export function SignUpForm() {
 							{error}
 						</p>
 					)}
-					<Button
-						type="submit"
-						className="w-full"
-						disabled={mutation.isPending}>
-						{mutation.isPending ? "Signing up..." : "Sign Up"}
+					<Button type="submit" className="w-full">
+						"Sign Up"
 					</Button>
 				</form>
 				<div className="mt-4 text-center text-sm">
