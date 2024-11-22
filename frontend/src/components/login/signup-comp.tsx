@@ -49,19 +49,9 @@ export function SignUpForm() {
 	const mutation = useMutation({
 		mutationFn: async (data: SignUpFormData) => {
 			try {
-				try {
-					const response = await api.post("/auth/signup", data);
-					console.log("Sign-Up Request Data:", response.data);
-					return response.data;
-				} catch (error: any) {
-					if (error.response && error.response.data) {
-						throw new Error(
-							error.response.data.message || "Login failed"
-						);
-					} else {
-						throw new Error(error.message || "Login failed");
-					}
-				}
+				const response = await api.post("/auth/signup", data);
+				console.log("Sign-Up Request Data:", response.data);
+				return response.data;
 			} catch (error: any) {
 				throw new Error(error.message || "Signup failed");
 			}
