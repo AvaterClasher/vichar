@@ -11,6 +11,8 @@ import { Separator } from "../ui/separator";
 import crypto from "crypto";
 import { Button } from "../ui/button";
 import api from "@/utils/api";
+import { Loading } from "../loading";
+import { Error } from "../error";
 
 const fetchPosts = async () => {
 	const { data } = await api.get("/posts");
@@ -34,11 +36,11 @@ export default function BlogPosts() {
 	};
 
 	if (isLoading) {
-		return <p>Loading...</p>;
+		return <p><Loading/></p>;
 	}
 
 	if (error) {
-		return <p>Error loading posts.</p>;
+		return <p><Error message={error.message}/></p>;
 	}
 
 	return (

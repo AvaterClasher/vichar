@@ -69,7 +69,7 @@ export function LoginForm() {
 			router.push(`/dashboard`);
 		},
 		onError: (err: Error) => {
-			setError(err.message);
+			toast.error(err.message)
 		},
 	});
 

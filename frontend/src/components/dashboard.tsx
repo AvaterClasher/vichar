@@ -13,6 +13,8 @@ import { Badge } from "./ui/badge";
 import { formatDistance } from "date-fns";
 import { Separator } from "./ui/separator";
 import crypto from "crypto";
+import { Loading } from "./loading";
+import { Error } from "./error";
 
 const fetchPosts = async (userId: any) => {
 	// userId = "867c5aff-8adb-4fad-87fa-596d9aabcedb";
@@ -40,11 +42,11 @@ function Dashboard() {
 	};
 
 	if (isLoading) {
-		return <p>Loading posts...</p>;
+		return <p><Loading/></p>;
 	}
 
 	if (isError) {
-		return <p>Error: {error.message}</p>;
+		return <p><Error message={error.message}/></p>;
 	}
 
 	return (

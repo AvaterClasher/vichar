@@ -8,6 +8,8 @@ import api from "@/utils/api";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "../ui/badge";
 import { Hash } from "lucide-react";
+import { Loading } from "../loading";
+import { Error } from "../error";
 
 const fetchBlogPost = async (id: string) => {
 	const { data } = await api.get(`/posts/${id}`);
@@ -30,8 +32,8 @@ export const BlogPost: React.FC = () => {
 	});
 	console.log(blogData);
 
-	if (isLoading) return <p>Loading post...</p>;
-	if (isError) return <p>Error: {(error as Error).message}</p>;
+	if (isLoading) return <p><Loading/></p>;
+	if (isError) return <p><Error message={error.message}/></p>;
 
 	const {
 		title,
