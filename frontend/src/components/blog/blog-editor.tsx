@@ -47,7 +47,6 @@ export default function BlogEditor() {
 	const mutation = useMutation({
 		mutationFn: createPost,
 		onSuccess: () => {
-			queryProvider.invalidateQueries({ queryKey: ["posts"] });
 			queryProvider.invalidateQueries({ queryKey: ["blog"] });
 			router.push("/dashboard");
 		},
@@ -184,9 +183,7 @@ export default function BlogEditor() {
 						onClick={() => router.back()}>
 						Cancel
 					</Button>
-					<Button
-						type="submit"
-						className="min-w-[100px]">
+					<Button type="submit" className="min-w-[100px]">
 						Publish
 					</Button>
 				</div>
