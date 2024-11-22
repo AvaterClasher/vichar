@@ -1,5 +1,3 @@
-/** @format */
-
 import { useQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
 import api from "@/utils/api";
@@ -43,35 +41,52 @@ export const BlogPost: React.FC = () => {
 	} = blogData;
 
 	return (
-		<div className="max-w-3xl mx-auto mt-20">
+		<div className="max-w-3xl mx-auto mt-10 px-4 sm:px-6 lg:px-8">
 			<img
 				src={bannerImageLink}
 				alt={title}
-				className="my-6 w-full h-96 rounded-lg"
+				className="my-6 w-full h-64 sm:h-96 object-cover rounded-lg"
 			/>
-			<div className="flex flex-col items-center justify-center gap-y-3 text-center">
-				<h1 className="text-4xl font-bold leading-tight sm:text-5xl">
+
+			<div className="flex flex-col items-center text-center gap-y-4">
+				<h1 className="text-3xl sm:text-4xl font-bold leading-tight">
 					{title}
 				</h1>
-				<p className="text-muted-foreground">{description}</p>
-				<div className="flex text-sm h-5 text-muted-foreground gap-5 items-center">
+				<p className="text-muted-foreground text-sm sm:text-base">
+					{description}
+				</p>
+
+				<div className="flex flex-wrap justify-center items-center text-xs sm:text-sm text-muted-foreground gap-x-2 sm:gap-x-5">
 					<span>By {User.username}</span>
-					<Separator orientation="vertical" />
+					<Separator
+						orientation="vertical"
+						className="hidden sm:block"
+					/>
 					<span>{new Date(createdAt).toLocaleDateString()}</span>
-					<Separator orientation="vertical" />
-					{Math.ceil(content.split(" ").length / 200)} min read
+					<Separator
+						orientation="vertical"
+						className="hidden sm:block"
+					/>
+					<span>
+						{Math.ceil(content.split(" ").length / 200)} min read
+					</span>
 				</div>
-				<div className="flex gap-2 mt-2">
+
+				<div className="flex flex-wrap justify-center gap-2 mt-2">
 					{tag
 						? tag.split(",").map((tag: string) => (
-								<Badge key={tag} variant="secondary">
+								<Badge
+									key={tag}
+									variant="secondary"
+									className="text-xs px-2 py-1">
 									<Hash className="h-3 w-3" /> {tag}
 								</Badge>
 						  ))
 						: null}
 				</div>
 			</div>
-			<div className="mt-8 mb-20 prose prose-neutral dark:prose-invert max-w-none">
+
+			<div className="mt-8 mb-20 prose prose-neutral dark:prose-invert max-w-none text-sm sm:text-base">
 				<MarkdownRenderer>{content}</MarkdownRenderer>
 			</div>
 		</div>
