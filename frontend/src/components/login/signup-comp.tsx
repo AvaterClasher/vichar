@@ -49,7 +49,9 @@ export function SignUpForm() {
 	const mutation = useMutation({
 		mutationFn: async (data: SignUpFormData) => {
 			try {
-				const response = await api.post("/auth/signup", data);
+				const response = await api.post("/auth/signup", data, {
+					headers: { "Content-Type": "application/json" },
+				});
 				return response.data;
 			} catch (error: any) {
 				if (error.response && error.response.data) {
@@ -65,7 +67,7 @@ export function SignUpForm() {
 			console.log(data);
 			setCookie("__vichar_id", data.id, { maxAge: oneDay });
 			setCookie("__vichar_token", data.token, { maxAge: oneDay });
-			console.log("hi")
+			console.log("hi");
 			toast.success("Sign-Up successful");
 			router.push("/dashboard");
 		},
