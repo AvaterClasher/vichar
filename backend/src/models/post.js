@@ -21,7 +21,7 @@ const Post = sequelize.define("Post", {
 	bannerImageLink: {
 		type: DataTypes.STRING,
 		defaultValue: "https://utfs.io/f/ahKxn5yGHsCwBhequAfw65j9Vf8PnuSWRrNXAv3cMEyqTK4i",
-		allowNull: true,
+		allowNull: false,
 	},
 	content: {
 		type: DataTypes.TEXT,
