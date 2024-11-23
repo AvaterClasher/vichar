@@ -177,7 +177,7 @@ We welcome contributions! Please feel free to submit issues, fork the repo, or c
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [MIT License](LICENSE.md).
 
 ## Contact
 

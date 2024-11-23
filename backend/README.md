@@ -169,7 +169,7 @@ Contributions are welcome! Please submit issues or pull requests for any improve
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [MIT License](LICENSE.md).
 
 ## Contact
 
