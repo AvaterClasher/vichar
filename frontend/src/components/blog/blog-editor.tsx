@@ -75,12 +75,12 @@ export default function BlogEditor() {
 			setError("Title and content are required");
 			return;
 		}
-
+		const bannerImageLink = banner.trim() || "https://utfs.io/f/ahKxn5yGHsCwBhequAfw65j9Vf8PnuSWRrNXAv3cMEyqTK4i";
 		mutation.mutate({
 			title: title.trim(),
 			content: content.trim(),
 			tag: tags.join(","),
-			bannerImageLink: banner.trim(),
+			bannerImageLink,
 			description: description.trim(),
 		});
 	};
