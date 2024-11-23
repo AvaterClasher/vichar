@@ -2,7 +2,7 @@
 
 **Vichar** is a backend service for managing user-authored posts, with features such as authentication, CRUD operations for posts, and user-post associations. Built with **Node.js**, **Express**, and **Sequelize**, it uses **PostgreSQL** as the database and includes a **Dockerized** setup for local development.
 
-> **Note**: There is a hosted frontend version of the app available at [Vichar-frontend](https://vichar2.vercel.app/) and a hosted backend available at [Vichar-backend](https://collective-violante-avater-dffc8fee.koyeb.app/api-docs). But as the backend is hosted on a free koyeb server, it may take some time to load the data. Also there are some times when the data is not fetched at all. So, it is recommended to run the backend and the frontend locally.
+> **Note**: There is a hosted frontend version of the app available at [Vichar-frontend](https://vichar2.vercel.app/) and a hosted backend available at [Vichar-backend](https://vichar-qf8u.onrender.com/api-docs). But as the backend is hosted on a free render server, it may take some time to load the data.
 
 ## Table of Contents
 

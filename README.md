@@ -2,7 +2,7 @@
 
 **Vichar** is a complete platform for managing and interacting with user-authored posts. It comprises a **backend service** for authentication, authorization, and CRUD operations, and a **frontend interface** for users to explore, write, and manage posts. Built with scalability and modern best practices in mind, Vichar offers seamless integration between its frontend and backend components.
 
-> **Note**: There is a hosted frontend version of the app available at [Vichar-frontend](https://vichar2.vercel.app/) and a hosted backend available at [Vichar-backend](https://collective-violante-avater-dffc8fee.koyeb.app/api-docs). But as the backend is hosted on a free koyeb server, it may take some time to load the data. Also there are some times when the data is not fetched at all. So, it is recommended to run the backend and the frontend locally.
+> **Note**: There is a hosted frontend version of the app available at [Vichar-frontend](https://vichar2.vercel.app/) and a hosted backend available at [Vichar-backend](https://vichar-qf8u.onrender.com/api-docs). But as the backend is hosted on a free render server, it may take some time to load the data.
 
 ## Table of Contents
 
