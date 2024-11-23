@@ -1,36 +1,182 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Vichar Frontend
 
-## Getting Started
+The **Vichar** is a modern, responsive web application for managing and interacting with user-authored posts. It provides authentication, an intuitive dashboard for users to write and manage their blogs, and a public-facing interface to explore posts. Built using **Next.js 14**, the frontend incorporates **React Server Components**, **TypeScript**, and dynamic routing.
 
-First, run the development server:
+## Table of Contents
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+1. [Features](#features)  
+2. [Project Structure](#project-structure)  
+3. [Installation](#installation)  
+4. [Routing Overview](#routing-overview)  
+5. [Contributing](#contributing)  
+6. [License](#license)  
+7. [Contact](#contact)  
+
+## Features
+
+- **Authentication**:
+  - Login and sign-up pages with role-based access.
+  - Handles "not signed up" states gracefully.
+
+- **User Dashboard**:
+  - Dedicated interface to manage user-authored posts.
+  - A post editor for writing and updating blog posts.
+
+- **Blog Rendering**:
+  - Clean and responsive layouts for individual blogs.
+  - Support for dynamic routing using slugs.
+
+- **Dark Mode Support**:
+  - Theme toggling.
+
+- **Modular UI**:
+  - Reusable and accessible components.
+
+- **API Integration**:
+  - Preconfigured API utilities for seamless backend communication.
+  - React Query for efficient data fetching and state management.
+
+## Project Structure
+
+```
+app/
+│   favicon.ico           # App icon
+│   globals.css           # Global CSS styles
+│   layout.tsx            # Root layout component
+│   page.tsx              # Landing page
+│
+├── blog/
+│   └── [slug]/
+│       page.tsx          # Dynamic blog detail page
+│
+├── dashboard/
+│   page.tsx              # User dashboard page
+│   └── write/
+│       page.tsx          # Blog editor page
+│
+├── fonts/
+│   GeistMonoVF.woff      # Custom font file
+│   GeistVF.woff          # Custom font file
+│
+├── login/
+│   page.tsx              # Login page
+│
+├── not-signed-up/
+│   page.tsx              # "Not signed up" redirect page
+│
+└── signup/
+    page.tsx              # Signup page
+
+components/
+│   checkAuth.tsx         # Higher Order Authentication wrapper component
+│   dark-mode-toggle.tsx  # Dark mode toggle component
+│   dashboard.tsx         # Dashboard layout and utilities
+│   footer.tsx            # Footer component
+│   navbar.tsx            # Navigation bar
+│   theme-provider.tsx    # Theme context provider
+│
+├── blog/
+│   blog-editor.tsx       # Blog editor component
+│   blog-header.tsx       # Blog header for details view
+│   blog-posts.tsx        # List of blogs
+│   blog-preview.tsx      # Preview card for blogs
+│   blog-render.tsx       # Render blog content
+│
+├── login/
+│   login-comp.tsx        # Login form
+│   signup-comp.tsx       # Signup form
+│
+└── ui/
+    badge.tsx             # Badge component
+    button.tsx            # Button component
+    card.tsx              # Card layout
+    dropdown-menu.tsx     # Dropdown menu
+    input.tsx             # Input field
+    label.tsx             # Label component
+    separator.tsx         # Separator line
+    sonner.tsx            # Notification system
+    tabs.tsx              # Tab navigation
+    textarea.tsx          # Text area field
+
+lib/
+    utils.ts              # Helper utilities
+
+utils/
+    api.ts                    # API calls and configurations
+    react-query-provider.tsx  # React Query provider for data fetching
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Installation
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Prerequisites
 
-## Learn More
+- [Node.js](https://nodejs.org/)
+- [npm](https://www.npmjs.com/)
 
-To learn more about Next.js, take a look at the following resources:
+### Steps
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Clone the repository:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   ```bash
+   git clone https://github.com/AvaterClasher/vichar.git
+   cd vichar/frontend
+   ```
 
-## Deploy on Vercel
+2. Install dependencies:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```bash
+   npm install
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3. Configure the environment variables:
+   Create a `.env.local` file in the root directory and add the following:
+
+   ```env
+   # For using the local backend
+   NEXT_PUBLIC_API_URL=http://localhost:5000/api
+   ```
+
+4. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+5. Open the app in your browser at `http://localhost:3000`.
+
+## Routing Overview
+
+- **Landing Page**: `/`  
+  Displays an overview of the platform.
+
+- **Login**: `/login`  
+  Page for user login.
+
+- **Signup**: `/signup`  
+  Registration page for new users.
+
+- **Dashboard**: `/dashboard`  
+  User dashboard for managing posts.
+
+- **Write Blog**: `/dashboard/write`  
+  Blog editor for creating or updating posts.
+
+- **View Blog**: `/blog/[slug]`  
+  Dynamic routing to display blog details.
+
+- **Not Signed Up**: `/not-signed-up`  
+  Redirects users who attempt unauthorized access.
+
+## Contributing
+
+We welcome contributions! Please feel free to submit issues, fork the repo, or create pull requests for any fixes or enhancements.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+## Contact
+
+For any questions, feel free to reach out via [GitHub](https://github.com/AvaterClasher).
