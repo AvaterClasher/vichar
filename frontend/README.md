@@ -137,7 +137,7 @@ utils/
 
    ```env
    # For using the local backend
-   NEXT_PUBLIC_API_URL=http://localhost:5000/api
+   NEXT_PUBLIC_API_URL=http://localhost:5000
    ```
 
 4. Start the development server:
