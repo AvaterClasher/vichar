@@ -13,6 +13,7 @@ import { Button } from "../ui/button";
 import api from "@/utils/api";
 import { Loading } from "../loading";
 import { Error } from "../error";
+import { useState } from "react";
 
 const fetchPosts = async () => {
 	const { data } = await api.get("/posts");
@@ -20,6 +21,8 @@ const fetchPosts = async () => {
 };
 
 export default function BlogPosts() {
+	const [searchTerm, setSearchTerm] = useState<string>("");
+
 	const {
 		data: posts,
 		isLoading,
@@ -36,15 +39,11 @@ export default function BlogPosts() {
 	};
 
 	if (isLoading) {
-		return (
-				<Loading />
-		);
+		return <Loading />;
 	}
 
 	if (error) {
-		return (
-				<Error message={error.message} />
-		);
+		return <Error message={error.message} />;
 	}
 
 	const sortedPosts = posts.sort(
@@ -52,19 +51,40 @@ export default function BlogPosts() {
 			new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
 	);
 
+
+	const filteredPosts = sortedPosts.filter((post: any) => {
+		const matchesSearchTerm =
+			post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+			post.User.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
+			post.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+			(post.tag &&
+				post.tag.toLowerCase().includes(searchTerm.toLowerCase()));
+
+		return matchesSearchTerm;
+	});
+
 	return (
 		<div>
 			<h2 className="text-2xl font-bold mb-6">Latest posts</h2>
-			{sortedPosts.length === 0 ? (
+			<div className="mb-6">
+				<input
+					type="text"
+					value={searchTerm}
+					onChange={(e) => setSearchTerm(e.target.value)}
+					placeholder="Search posts..."
+					className="w-full p-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-primary"
+				/>
+			</div>
+			{filteredPosts.length === 0 ? (
 				<div className="flex flex-col items-center justify-center rounded-2xl text-xl gap-5 border h-60 w-full">
 					No posts available.
 					<Button className="text-base">
-						<Link href="/signup">Write one yourself ?</Link>
+						<Link href="/dashboard/write">Write one yourself ?</Link>
 					</Button>
 				</div>
 			) : (
 				<div className="space-y-4">
-					{sortedPosts.map((post: any) => (
+					{filteredPosts.map((post: any) => (
 						<Link
 							key={post.id}
 							href={`/blog/${post.id}`}
