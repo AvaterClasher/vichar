@@ -48,7 +48,7 @@ export const BlogPost: React.FC = () => {
 	} = blogData;
 
 	return (
-		<div className="max-w-3xl mx-auto mt-10 px-4 sm:px-6 lg:px-8">
+		<div className="max-w-3xl mx-auto mt-20 px-4 sm:px-6 lg:px-8">
 			<img
 				src={bannerImageLink}
 				alt={title}
