@@ -26,14 +26,17 @@
                 },
                 "password": {
                   "example": "any"
+                },
+                "username": {
+                  "example": "any"
                 }
               }
             }
           }
         ],
         "responses": {
-          "201": {
-            "description": "Created"
+          "200": {
+            "description": "OK"
           },
           "400": {
             "description": "Bad Request"
@@ -103,14 +106,20 @@
                 },
                 "tag": {
                   "example": "any"
+                },
+                "bannerImageLink": {
+                  "example": "any"
+                },
+                "description": {
+                  "example": "any"
                 }
               }
             }
           }
         ],
         "responses": {
-          "201": {
-            "description": "Created"
+          "200": {
+            "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
@@ -125,6 +134,13 @@
       },
       "get": {
         "description": "",
+        "parameters": [
+          {
+            "name": "author",
+            "in": "query",
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -159,12 +175,12 @@
         }
       }
     },
-    "/api/posts/author/{authorId}": {
+    "/api/posts/{postId}": {
       "get": {
         "description": "",
         "parameters": [
           {
-            "name": "authorId",
+            "name": "postId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -174,13 +190,14 @@
           "200": {
             "description": "OK"
           },
+          "404": {
+            "description": "Not Found"
+          },
           "500": {
             "description": "Internal Server Error"
           }
         }
-      }
-    },
-    "/api/posts/{postId}": {
+      },
       "put": {
         "description": "",
         "parameters": [
@@ -212,6 +229,39 @@
                 }
               }
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
