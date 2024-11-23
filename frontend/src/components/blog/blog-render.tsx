@@ -1,4 +1,6 @@
-"use client"
+/** @format */
+
+"use client";
 
 import { useQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
@@ -10,6 +12,8 @@ import { Loading } from "../loading";
 import { Error } from "../error";
 import remarkGfm from "remark-gfm";
 import Markdown from "react-markdown";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const fetchBlogPost = async (id: string) => {
 	const { data } = await api.get(`/posts/${id}`);
@@ -90,7 +94,38 @@ export const BlogPost: React.FC = () => {
 			</div>
 
 			<div className="mt-8 mb-20 prose prose-neutral dark:prose-invert max-w-none text-sm sm:text-base">
-				<Markdown remarkPlugins={[remarkGfm]}>{content}</Markdown>;
+				<Markdown
+					remarkPlugins={[remarkGfm]}
+					components={{
+						code(props) {
+							const { children, className, node, ...rest } =
+								props;
+							const match = /language-(\w+)/.exec(
+								className || ""
+							);
+							return match ? (
+								<SyntaxHighlighter
+									{...rest}
+									PreTag="div"
+									children={String(children).replace(
+										/\n$/,
+										""
+									)}
+									language={match[1]}
+									showLineNumbers
+									wrapLongLines
+									style={atomDark}
+								/>
+							) : (
+								<code {...rest} className={className}>
+									{children}
+								</code>
+							);
+						},
+					}}>
+					{content}
+				</Markdown>
+				;
 			</div>
 		</div>
 	);

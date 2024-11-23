@@ -1,3 +1,5 @@
+/** @format */
+
 "use client";
 
 import { formatDistance } from "date-fns";
@@ -5,6 +7,9 @@ import { Hash } from "lucide-react";
 import { Badge } from "../ui/badge";
 import { Separator } from "../ui/separator";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 interface PostPreviewProps {
 	title: string;
@@ -45,11 +50,38 @@ export default function PostPreview({
 			</div>
 
 			<div className="prose prose-neutral dark:prose-invert max-w-none mt-5">
-				<ReactMarkdown>
+				<ReactMarkdown
+					remarkPlugins={[remarkGfm]}
+					components={{
+						code(props) {
+							const { children, className, node, ...rest } =
+								props;
+							const match = /language-(\w+)/.exec(
+								className || ""
+							);
+							return match ? (
+								<SyntaxHighlighter
+									{...rest}
+									PreTag="div"
+									children={String(children).replace(
+										/\n$/,
+										""
+									)}
+									language={match[1]}
+									showLineNumbers
+									wrapLongLines
+									style={atomDark}
+								/>
+							) : (
+								<code {...rest} className={className}>
+									{children}
+								</code>
+							);
+						},
+					}}>
 					{content || "Start writing your post..."}
 				</ReactMarkdown>
 			</div>
-
 		</div>
 	);
 }
