@@ -6,10 +6,10 @@ import { formatDistance } from "date-fns";
 import { Hash } from "lucide-react";
 import { Badge } from "../ui/badge";
 import { Separator } from "../ui/separator";
-import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import Markdown from "react-markdown";
 
 interface PostPreviewProps {
 	title: string;
@@ -50,7 +50,7 @@ export default function PostPreview({
 			</div>
 
 			<div className="prose prose-neutral dark:prose-invert max-w-none mt-5">
-				<ReactMarkdown
+				<Markdown
 					remarkPlugins={[remarkGfm]}
 					components={{
 						code(props) {
@@ -61,17 +61,13 @@ export default function PostPreview({
 							);
 							return match ? (
 								<SyntaxHighlighter
-									{...rest}
 									PreTag="div"
-									children={String(children).replace(
-										/\n$/,
-										""
-									)}
 									language={match[1]}
 									showLineNumbers
 									wrapLongLines
-									style={atomDark}
-								/>
+									style={atomDark}>
+									{String(children).replace(/\n$/, "")}
+								</SyntaxHighlighter>
 							) : (
 								<code {...rest} className={className}>
 									{children}
@@ -79,8 +75,8 @@ export default function PostPreview({
 							);
 						},
 					}}>
-					{content || "Start writing your post..."}
-				</ReactMarkdown>
+					{content}
+				</Markdown>
 			</div>
 		</div>
 	);

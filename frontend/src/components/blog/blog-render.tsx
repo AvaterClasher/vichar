@@ -105,17 +105,14 @@ export const BlogPost: React.FC = () => {
 							);
 							return match ? (
 								<SyntaxHighlighter
-									{...rest}
 									PreTag="div"
-									children={String(children).replace(
-										/\n$/,
-										""
-									)}
 									language={match[1]}
 									showLineNumbers
 									wrapLongLines
 									style={atomDark}
-								/>
+								>
+									{String(children).replace(/\n$/, "")}
+								</SyntaxHighlighter>
 							) : (
 								<code {...rest} className={className}>
 									{children}
@@ -125,7 +122,6 @@ export const BlogPost: React.FC = () => {
 					}}>
 					{content}
 				</Markdown>
-				;
 			</div>
 		</div>
 	);
