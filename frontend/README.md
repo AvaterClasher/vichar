@@ -2,6 +2,8 @@
 
 The **Vichar** is a modern, responsive web application for managing and interacting with user-authored posts. It provides authentication, an intuitive dashboard for users to write and manage their blogs, and a public-facing interface to explore posts. Built using **Next.js 14**, the frontend incorporates **React Server Components**, **TypeScript**, and dynamic routing.
 
+> **Note**: There is a hosted frontend version of the app available at [Vichar](https://vichar2.vercel.app/). But as the backend is hosted on a free koyeb server, it may take some time to load the data. Also there are some times when the data is not fetched at all. So, it is recommended to run the backend and the frontend locally.
+
 ## Table of Contents
 
 1. [Features](#features)  
