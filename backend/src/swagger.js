@@ -5,7 +5,7 @@ const doc = {
     title: 'Blog API',
     description: 'API documentation for the Blog API',
   },
-  host: 'localhost:5000'
+  host: process.env.NODE_ENV === 'production' ? 'vichar-qf8u.onrender.com' : `localhost:${process.env.PORT || 5000}`
 };
 
 const outputFile = './swagger.json';
