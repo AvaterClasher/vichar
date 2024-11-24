@@ -3,7 +3,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider } from "@/utils/theme-provider";
 import ReactQueryProvider from "@/utils/react-query-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { Footer } from "@/components/footer";
