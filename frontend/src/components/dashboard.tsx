@@ -2,7 +2,7 @@
 
 "use client";
 
-import withAuth from "./checkAuth";
+import withAuth from "../utils/checkAuth";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import api from "@/utils/api";
 import { Button } from "./ui/button";
@@ -112,18 +112,18 @@ function Dashboard() {
 						key={post.id}
 						href={`/blog/${post.id}`}
 						className="block p-5 rounded-lg border transition-colors duration-300 ease-in-out hover:bg-secondary/50">
-						<div className="flex items-start justify-between mb-3">
-							<h3 className="text-lg font-semibold">
+						<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3">
+							<h3 className="text-base font-semibold sm:text-lg">
 								{post.title}
 							</h3>
-							<div className="flex items-cedivr space-x-2 h-5">
+							<div className="mt-2 flex flex-wrap items-center gap-x-2 text-sm text-muted-foreground h-5 sm:h-5 sm:mt-0">
 								<img
 									src={getAvatar(post.User.email, 20)}
 									alt={post.User.username}
-									className="rounded-full"
+									className="rounded-full h-5 w-5"
 								/>
 								<Separator orientation="vertical" />
-								<span className="text-gray-400 text-sm">
+								<span className="text-gray-400 sm:block">
 									{formatDistance(
 										new Date(post.createdAt),
 										new Date(),
@@ -131,7 +131,7 @@ function Dashboard() {
 									)}
 								</span>
 								<Separator orientation="vertical" />
-								<span className="text-gray-400 text-sm">
+								<span className="text-gray-400 sm:block">
 									{Math.ceil(
 										post.content.split(" ").length / 200
 									)}{" "}

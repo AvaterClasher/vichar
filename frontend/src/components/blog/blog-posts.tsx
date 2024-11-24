@@ -51,11 +51,12 @@ export default function BlogPosts() {
 			new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
 	);
 
-
 	const filteredPosts = sortedPosts.filter((post: any) => {
 		const matchesSearchTerm =
 			post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-			post.User.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
+			post.User.username
+				.toLowerCase()
+				.includes(searchTerm.toLowerCase()) ||
 			post.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
 			(post.tag &&
 				post.tag.toLowerCase().includes(searchTerm.toLowerCase()));
@@ -64,22 +65,24 @@ export default function BlogPosts() {
 	});
 
 	return (
-		<div>
-			<h2 className="text-2xl font-bold mb-6">Latest posts</h2>
+		<div className="p-4 sm:p-6">
+			<h2 className="text-2xl font-bold mb-6 text-center sm:text-left">
+				Latest posts
+			</h2>
 			<div className="mb-6">
 				<input
 					type="text"
 					value={searchTerm}
 					onChange={(e) => setSearchTerm(e.target.value)}
 					placeholder="Search posts..."
-					className="w-full p-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-primary"
+					className="w-full p-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
 				/>
 			</div>
 			{filteredPosts.length === 0 ? (
-				<div className="flex flex-col items-center justify-center rounded-2xl text-xl gap-5 border h-60 w-full">
+				<div className="flex flex-col items-center justify-center rounded-2xl text-lg gap-5 border h-60 w-full sm:text-xl">
 					No posts available.
-					<Button className="text-base">
-						<Link href="/dashboard/write">Write one yourself ?</Link>
+					<Button className="text-sm sm:text-base">
+						<Link href="/dashboard/write">Write one yourself?</Link>
 					</Button>
 				</div>
 			) : (
@@ -88,27 +91,27 @@ export default function BlogPosts() {
 						<Link
 							key={post.id}
 							href={`/blog/${post.id}`}
-							className="block p-5 rounded-lg border transition-colors duration-300 ease-in-out hover:bg-secondary/50">
-							<div className="flex items-start justify-between mb-3">
-								<h3 className="text-base font-semibold">
+							className="block p-4 rounded-lg border transition-colors duration-300 ease-in-out hover:bg-secondary/50 sm:p-5">
+							<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3">
+								<h3 className="text-base font-semibold sm:text-lg">
 									{post.title}
 								</h3>
-								<div className="mb-2 flex flex-wrap items-center gap-x-2 text-sm text-muted-foreground h-5">
+								<div className="mt-2 flex flex-wrap items-center gap-x-2 text-sm text-muted-foreground h-5 sm:h-5 sm:mt-0">
 									<img
 										src={getAvatar(post.User.email, 20)}
 										alt={post.User.username}
-										className="rounded-full"
+										className="rounded-full h-5 w-5"
 									/>
-									<Separator orientation="vertical" />
-									<span className="text-gray-400 text-sm">
+									<Separator orientation="vertical"/>
+									<span className="text-gray-400 sm:block">
 										{formatDistance(
 											new Date(post.createdAt),
 											new Date(),
 											{ addSuffix: true }
 										)}
 									</span>
-									<Separator orientation="vertical" />
-									<span className="text-gray-400 text-sm">
+									<Separator orientation="vertical"/>
+									<span className="text-gray-400 sm:block">
 										{Math.ceil(
 											post.content.split(" ").length / 200
 										)}{" "}
@@ -116,17 +119,18 @@ export default function BlogPosts() {
 									</span>
 								</div>
 							</div>
-							<p className="text-muted-foreground mb-3 text-sm">
+							<p className="text-muted-foreground mb-3 text-sm sm:text-base">
 								{post.description.slice(0, 100)}...
 							</p>
-							<div className="flex space-x-2 mt-4">
+							<div className="flex flex-wrap gap-2 mt-4">
 								{post.tag
 									? post.tag.split(",").map((tag: string) => (
 											<Badge
 												key={tag}
-												variant="secondary">
-												<Hash className="h-3 w-3" />{" "}
-												{tag}
+												variant="secondary"
+												className="flex items-center space-x-1 text-xs sm:text-sm">
+												<Hash className="h-3 w-3" />
+												<span>{tag}</span>
 											</Badge>
 									  ))
 									: null}
