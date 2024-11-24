@@ -2,18 +2,20 @@
 
 "use client";
 
+import React, { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
 import api from "@/utils/api";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "../ui/badge";
-import { Hash } from "lucide-react";
+import { Hash, ArrowUp } from "lucide-react";
 import { Loading } from "../loading";
 import { Error } from "../error";
 import remarkGfm from "remark-gfm";
 import Markdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { Button } from "../ui/button";
 
 const fetchBlogPost = async (id: string) => {
 	const { data } = await api.get(`/posts/${id}`);
@@ -34,6 +36,21 @@ export const BlogPost: React.FC = () => {
 		queryFn: () => fetchBlogPost(id as string),
 	});
 
+	const [showScrollTop, setShowScrollTop] = useState(false);
+
+	useEffect(() => {
+		const handleScroll = () => {
+			setShowScrollTop(window.scrollY > 300);
+		};
+
+		window.addEventListener("scroll", handleScroll);
+		return () => window.removeEventListener("scroll", handleScroll);
+	}, []);
+
+	const scrollToTop = () => {
+		window.scrollTo({ top: 0, behavior: "smooth" });
+	};
+
 	if (isLoading) return <Loading />;
 	if (isError) return <Error message={error.message} />;
 
@@ -48,7 +65,7 @@ export const BlogPost: React.FC = () => {
 	} = blogData;
 
 	return (
-		<div className="max-w-3xl mx-auto mt-20 px-4 sm:px-6 lg:px-8">
+		<div className="max-w-3xl mx-auto mt-20 px-4 sm:px-6 lg:px-8 relative">
 			<img
 				src={bannerImageLink}
 				alt={title}
@@ -109,8 +126,7 @@ export const BlogPost: React.FC = () => {
 									language={match[1]}
 									showLineNumbers
 									wrapLongLines
-									style={atomDark}
-								>
+									style={atomDark}>
 									{String(children).replace(/\n$/, "")}
 								</SyntaxHighlighter>
 							) : (
@@ -123,6 +139,16 @@ export const BlogPost: React.FC = () => {
 					{content}
 				</Markdown>
 			</div>
+
+			{showScrollTop && (
+				<Button
+					onClick={scrollToTop}
+					variant="outline"
+					className="fixed bottom-8 hidden w-16 h-16 md:flex items-center justify-center right-8 z-50 p-3 bg-background border border-text-muted text-foreground rounded-full shadow-lg"
+					aria-label="Scroll to top">
+					<ArrowUp className="h-10 w-10" />
+				</Button>
+			)}
 		</div>
 	);
 };
