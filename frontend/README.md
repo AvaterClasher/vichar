@@ -140,6 +140,8 @@ utils/
    NEXT_PUBLIC_API_URL=http://localhost:5000
    ```
 
+   Also create a new website tracking script in [Umami](https://umami.is) and change it with the existing one in [src/app/layout.tsx](src/app/layout.tsx).
+
 4. Start the development server:
 
    ```bash
