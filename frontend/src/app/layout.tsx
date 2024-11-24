@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/utils/theme-provider";
 import ReactQueryProvider from "@/utils/react-query-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { Footer } from "@/components/footer";
+import Script from "next/script";
 
 const geistSans = localFont({
 	src: "./fonts/GeistVF.woff",
@@ -31,6 +32,11 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en" suppressHydrationWarning>
+			<Script
+				async
+				src="https://cloud.umami.is/script.js"
+				data-website-id="16af49d2-0559-4ee9-a0a7-304d5900a7b5"
+			/>
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
 				<ThemeProvider
