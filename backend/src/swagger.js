@@ -8,6 +8,8 @@ const doc = {
   host: process.env.NODE_ENV === 'production' ? 'vichar-qf8u.onrender.com' : `localhost:${process.env.PORT || 5000}`
 };
 
+console.log(doc.host)
+
 const outputFile = './swagger.json';
 const routes = ['./server.js'];
 
